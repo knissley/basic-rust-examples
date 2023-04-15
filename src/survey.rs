@@ -1,11 +1,17 @@
 use rand::prelude::*;
 use std::io;
 
-struct Person<'a> {
+struct Person {
     name: String,
     age: i32,
-    job: &'a str,
+    job: String,
     hobbies: String,
+}
+
+impl Person {
+    fn describe(&mut self) {
+        println!("My name is {} and I'm {} years old.", self.name, self.age);
+    }
 }
 
 pub fn survey() {
@@ -25,7 +31,7 @@ pub fn survey() {
             .read_line(&mut job)
             .expect("to be able to read the line");
 
-        let job = job.trim();
+        let job = String::from(job.trim());
 
         println!("Ok, you're a(n) {}, awesome!", job);
         println!("Please list out some of your hobbies, separated by a comma.");
@@ -37,7 +43,7 @@ pub fn survey() {
         let hobbies = hobbies.trim();
         let hobbies = sanitize_hobbies(&hobbies);
 
-        let person = Person {
+        let mut person = Person {
             name,
             age,
             job,
@@ -47,8 +53,7 @@ pub fn survey() {
         println!(
             "Thank you for answering the survey, does this information look right to you? (Y/N)"
         );
-        println!("Your name is: {}", person.name);
-        println!("Your age is: {}", person.age);
+        person.describe();
         println!("For work, you are a(n): {}", person.job);
         println!("And your hobbies include: {:?}", person.hobbies);
 
