@@ -1,7 +1,8 @@
 use std::io;
 mod survey;
+mod toy_problems;
 
-const PROGRAM_OPTIONS: [&str; 1] = ["Survey"];
+const PROGRAM_OPTIONS: [&str; 2] = ["Survey", "Toy Problems"];
 
 fn main() {
     let mut app_choice = String::new();
@@ -15,10 +16,12 @@ fn main() {
 
     let app_choice = app_choice.trim();
 
-    // TODO:: use a better matching system
-    if app_choice == "Survey" {
-        survey::survey();
-    } else {
-        println!("Invalid choice, aborting...");
+    match app_choice {
+        "Survey" => survey::survey(),
+        "Toy Problems" => toy_problems::toy_problems(),
+        _ => {
+            println!("{app_choice} is an invalid choice.");
+            println!("Aborting...");
+        }
     }
 }
